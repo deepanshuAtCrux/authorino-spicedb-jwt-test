@@ -22,7 +22,21 @@ spec:
         endpoint: http://keycloak.keycloak.svc.cluster.local:8080/realms/kuadrant
         credentialsRef:
           name: talker-api-uma-credentials
-
+  patterns:
+      create:
+        - selector: context.request.http.method
+          operator: eq
+          value: POST
+        - selector: context.request.http.path.@extract:{"sep":"/","pos":3}
+          operator: neq
+          value: allow
+      list:
+        - selector: context.request.http.method
+          operator: eq
+          value: GET
+        - selector: context.request.http.path.@extract:{"sep":"/","pos":2}
+          operator: eq
+          value: ""
   authorization:
     "authzed-spicedb":
       spicedb:
