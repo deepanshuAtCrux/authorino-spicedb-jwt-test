@@ -20,3 +20,10 @@
 ```bash
 ./test_auth.sh
 ```
+
+3) For cleanup run
+
+```bash
+./cleanup_cluster.sh
+
+```
