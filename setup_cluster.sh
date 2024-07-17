@@ -588,30 +588,31 @@ EOF
 ## wait for cluster to get spin up
 #sleep 20
 #
-#kubectl -n docs-api apply -f -<<EOF
-#apiVersion: v1
-#kind: Secret
-#metadata:
-#  name: talker-api-uma-credentials
-#stringData:
-#  clientID: talker-api
-#  clientSecret: 523b92b6-625d-4e1e-a313-77e7a8ae4e88
-#type: Opaque
-#---
-#apiVersion: v1
-#kind: Secret
-#metadata:
-#  name: spicedb
-#  labels:
-#    app: spicedb
-#stringData:
-#  grpc-preshared-key: secret
-#  token: secret
-#EOF
+kubectl -n docs-api apply -f -<<EOF
+apiVersion: v1
+kind: Secret
+metadata:
+  name: talker-api-uma-credentials
+stringData:
+  clientID: talker-api
+  clientSecret: 523b92b6-625d-4e1e-a313-77e7a8ae4e88
+type: Opaque
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: spicedb
+  labels:
+    app: spicedb
+stringData:
+  grpc-preshared-key: secret
+  token: secret
+EOF
 
 # we should not be able to access the docs api
 curl http://docs-api.127.0.0.1.nip.io/docs -i
 
+echo "Completed>>>>>>>>>>"
 # HTTP/1.1 404 Not Found
 # x-ext-auth-reason: Service not found
 # server: envoy
